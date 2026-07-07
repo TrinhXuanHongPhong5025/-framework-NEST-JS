@@ -8,7 +8,7 @@ function Footer(){
 
                 <i className="bi bi-bootstrap-fill"></i>
 
-                {" "}My React Bootstrap Website
+                {" "}React Bootstrap of Gio
 
             </h5>
 

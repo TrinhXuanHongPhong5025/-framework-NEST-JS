@@ -1,14 +1,26 @@
-function Footer() {
+function Footer(){
 
     return(
 
-        <div className="text-center mt-3">
+        <footer>
 
-            <i className="bi bi-geo-alt"></i>
+            <h5>
 
-            Hanoi, August 2026
+                <i className="bi bi-bootstrap-fill"></i>
 
-        </div>
+                {" "}My React Bootstrap Website
+
+            </h5>
+
+            <p>
+
+                <i className="bi bi-geo-alt-fill"></i>
+
+                Hanoi, Vietnam
+
+            </p>
+
+        </footer>
 
     )
 

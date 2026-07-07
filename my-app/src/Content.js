@@ -1,53 +1,98 @@
 import { useEffect, useState } from "react";
+
 import axios from "axios";
+
+import Card from "react-bootstrap/Card";
+
+import Container from "react-bootstrap/Container";
+
 import Table from "react-bootstrap/Table";
 
-function Content() {
+function Content(){
 
-  const [users,setUsers]=useState([]);
+    const [users,setUsers]=useState([]);
 
-  useEffect(()=>{
+    useEffect(()=>{
 
-    axios.get("https://jsonplaceholder.typicode.com/users")
-      .then(res=>{
-        setUsers(res.data);
-      })
+        axios
 
-  },[])
+        .get("https://jsonplaceholder.typicode.com/users")
 
-  return(
+        .then((res)=>{
 
-    <Table striped bordered hover>
+            setUsers(res.data);
 
-      <thead>
+        })
 
-      <tr>
-        <th>Name</th>
-        <th>ID</th>
-        <th>Status</th>
-      </tr>
+    },[])
 
-      </thead>
+    return(
 
-      <tbody>
+        <Container>
 
-      {
-        users.slice(0,1).map(user=>(
+            <Card className="glass-card">
 
-          <tr key={user.id}>
-            <td>{user.name}</td>
-            <td>{user.id}</td>
-            <td>Active</td>
-          </tr>
+                <Card.Body>
 
-        ))
-      }
+                    <h2 className="mb-4">
 
-      </tbody>
+                        <i className="bi bi-people-fill text-primary"></i>
 
-    </Table>
+                        {" "}User List
 
-  )
+                    </h2>
+
+                    <Table hover responsive>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>ID</th>
+
+                                <th>Name</th>
+
+                                <th>Email</th>
+
+                                <th>Company</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {
+
+                                users.map((user)=>(
+
+                                    <tr key={user.id}>
+
+                                        <td>{user.id}</td>
+
+                                        <td>{user.name}</td>
+
+                                        <td>{user.email}</td>
+
+                                        <td>{user.company.name}</td>
+
+                                    </tr>
+
+                                ))
+
+                            }
+
+                        </tbody>
+
+                    </Table>
+
+                </Card.Body>
+
+            </Card>
+
+        </Container>
+
+    )
 
 }
 

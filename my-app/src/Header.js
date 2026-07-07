@@ -1,29 +1,73 @@
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 
 function Header() {
-  return (
-    <Navbar bg="light" expand="lg">
-      <Container>
-        <Navbar.Brand>MY APP</Navbar.Brand>
 
-        <Navbar.Toggle />
+    return (
 
-        <Navbar.Collapse>
-          <Nav>
-            <Nav.Link href="#">Home</Nav.Link>
-            <Nav.Link href="#">Link</Nav.Link>
+        <Navbar expand="lg" className="custom-navbar">
 
-            <NavDropdown title="Options">
-              <NavDropdown.Item>Option 1</NavDropdown.Item>
-              <NavDropdown.Item>Option 2</NavDropdown.Item>
-            </NavDropdown>
+            <Container>
 
-          </Nav>
-        </Navbar.Collapse>
+                <Navbar.Brand className="logo">
 
-      </Container>
-    </Navbar>
-  );
+                    <i className="bi bi-bootstrap-fill"></i>
+
+                    {" "}MY APP
+
+                </Navbar.Brand>
+
+                <Navbar.Toggle />
+
+                <Navbar.Collapse>
+
+                    <Nav className="mx-auto">
+
+                        <Nav.Link href="#">Home</Nav.Link>
+
+                        <Nav.Link href="#">Products</Nav.Link>
+
+                        <Nav.Link href="#">Gallery</Nav.Link>
+
+                        <NavDropdown title="More">
+
+                            <NavDropdown.Item>About</NavDropdown.Item>
+
+                            <NavDropdown.Item>Contact</NavDropdown.Item>
+
+                        </NavDropdown>
+
+                    </Nav>
+
+                    <Nav>
+
+                        <Nav.Link>
+
+                            <i className="bi bi-search fs-5"></i>
+
+                        </Nav.Link>
+
+                        <Nav.Link>
+
+                            <i className="bi bi-heart fs-5"></i>
+
+                        </Nav.Link>
+
+                        <Nav.Link>
+
+                            <i className="bi bi-person-circle fs-4"></i>
+
+                        </Nav.Link>
+
+                    </Nav>
+
+                </Navbar.Collapse>
+
+            </Container>
+
+        </Navbar>
+
+    )
+
 }
 
 export default Header;

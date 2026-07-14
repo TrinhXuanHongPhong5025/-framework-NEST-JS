@@ -1,4 +1,8 @@
+import { useState } from "react";
+import { Modal } from "react-bootstrap";
+
 function Banner() {
+
   const images = [
     "https://i.pinimg.com/736x/59/14/c1/5914c12319192ebc065cf0b17e972551.jpg",
     "https://i.pinimg.com/736x/4f/1e/1f/4f1e1f8f5b4e6c061a28a200341b2375.jpg",
@@ -15,27 +19,66 @@ function Banner() {
     "https://i.pinimg.com/736x/7a/a9/91/7aa991f8c8b76057e8b38c2e8cf75a78.jpg",
   ];
 
-  // Nhân đôi mảng để chạy vô hạn
   const allImages = [...images, ...images];
 
+  const [show, setShow] = useState(false);
+  const [selectedImage, setSelectedImage] = useState("");
+
+  const openImage = (img) => {
+    setSelectedImage(img);
+    setShow(true);
+  };
+
+  const closeImage = () => {
+    setShow(false);
+  };
+
   return (
-    <section className="banner">
+    <>
 
-      <div className="banner-track">
+      <section className="banner">
 
-        {allImages.map((img, index) => (
+        <div className="banner-track">
 
-          <div className="banner-card" key={index}>
+          {allImages.map((img, index) => (
 
-            <img src={img} alt="" />
+            <div
+              className="banner-card"
+              key={index}
+              onClick={() => openImage(img)}
+            >
 
-          </div>
+              <img src={img} alt="" />
 
-        ))}
+            </div>
 
-      </div>
+          ))}
 
-    </section>
+        </div>
+
+      </section>
+
+      <Modal
+        show={show}
+        onHide={closeImage}
+        centered
+        size="xl"
+        className="image-modal"
+      >
+
+        <Modal.Body>
+
+          <img
+            src={selectedImage}
+            alt=""
+            className="popup-image"
+          />
+
+        </Modal.Body>
+
+      </Modal>
+
+    </>
   );
 }
 

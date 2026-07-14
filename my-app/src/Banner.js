@@ -4,6 +4,7 @@ import { Modal } from "react-bootstrap";
 function Banner() {
 
   const images = [
+    "https://i.pinimg.com/736x/cf/2c/71/cf2c718361feb821d9e714b0d1d8f531.jpg",
     "https://i.pinimg.com/736x/59/14/c1/5914c12319192ebc065cf0b17e972551.jpg",
     "https://i.pinimg.com/736x/4f/1e/1f/4f1e1f8f5b4e6c061a28a200341b2375.jpg",
     "https://i.pinimg.com/736x/7e/17/56/7e1756b1ee103cefd9ee5a658aeeef6f.jpg",

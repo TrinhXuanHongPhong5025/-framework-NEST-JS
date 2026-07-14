@@ -9,6 +9,10 @@ function Banner() {
     "https://i.pinimg.com/736x/56/9e/48/569e48bfb51dce145473911556f5e1b3.jpg",
     "https://i.pinimg.com/736x/4b/b8/98/4bb89891dfcfd19d9810a9996d11d91f.jpg",
     "https://i.pinimg.com/736x/c5/9a/a3/c59aa3de629e9d190207c6d26048f7ca.jpg",
+    "https://i.pinimg.com/736x/b9/f0/3f/b9f03fe5deb0d013b0e03e383439a6c3.jpg",
+    "https://i.pinimg.com/control1/1200x/9c/b2/9f/9cb29fd88fe356679fb41cab2b1a6dde.jpg",
+    "https://i.pinimg.com/736x/a0/ed/1b/a0ed1bf68cea76d1b313421620b0d836.jpg",
+    "https://i.pinimg.com/736x/7a/a9/91/7aa991f8c8b76057e8b38c2e8cf75a78.jpg",
   ];
 
   // Nhân đôi mảng để chạy vô hạn

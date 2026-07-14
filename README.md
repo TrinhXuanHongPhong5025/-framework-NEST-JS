@@ -117,5 +117,5 @@ src
 
 ## Tác giả
 
-- Họ và tên: ....................................
+- Họ và tên: Trịnh Xuân Hồng Phong
 - Môn học: ReactJS Framework

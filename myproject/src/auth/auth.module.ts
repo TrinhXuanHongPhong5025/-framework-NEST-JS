@@ -8,6 +8,8 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 
 import { JwtStrategy } from './jwt.strategy';
+import { JWT_SECRET } from './auth.constants';
+import { AdminGuard } from './guards/admin.guard';
 
 import { User } from '../user/user.entity';
 
@@ -18,7 +20,7 @@ import { User } from '../user/user.entity';
     PassportModule,
 
     JwtModule.register({
-      secret: 'jwt-secret-key',
+      secret: JWT_SECRET,
       signOptions: {
         expiresIn: '1h',
       },
@@ -30,6 +32,8 @@ import { User } from '../user/user.entity';
   providers: [
     AuthService,
     JwtStrategy,
+    AdminGuard,
   ],
+  exports: [AdminGuard],
 })
 export class AuthModule {}

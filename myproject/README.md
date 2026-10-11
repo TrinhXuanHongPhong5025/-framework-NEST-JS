@@ -57,6 +57,20 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## Admin accounts
+
+The first administrator is bootstrapped only when `ADMIN_USERNAME`, `ADMIN_EMAIL`, and `ADMIN_PASSWORD` are set and the database has no admin account. Set a strong `JWT_SECRET` as well, then start the API:
+
+```bash
+ADMIN_USERNAME=admin \
+ADMIN_EMAIL=admin@example.com \
+ADMIN_PASSWORD='use-a-strong-password' \
+JWT_SECRET='use-a-long-random-secret' \
+npm run start:dev
+```
+
+The API listens on port `3001` by default. New registrations at `POST /auth/register` receive the admin role. Existing accounts are promoted to admin on successful login, and authenticated tokens are treated as admin tokens. An authenticated account can create another administrator at `POST /auth/admins`; no regular-user account creation route is exposed. `FRONTEND_URL` can override the allowed frontend origin.
+
 ## Deployment
 
 When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.

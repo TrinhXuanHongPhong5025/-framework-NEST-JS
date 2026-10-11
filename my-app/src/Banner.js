@@ -1,12 +1,10 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Modal } from "react-bootstrap";
 
-function Banner() {
-
-  const images = [
-    "https://i.pinimg.com/736x/cf/2c/71/cf2c718361feb821d9e714b0d1d8f531.jpg",
+const featuredImages = [
+    "https://i.pinimg.com/736x/4b/91/59/4b9159fd1b7d8851b72e8af5653b37fc.jpg",
     "https://i.pinimg.com/736x/59/14/c1/5914c12319192ebc065cf0b17e972551.jpg",
-    "https://i.pinimg.com/736x/4f/1e/1f/4f1e1f8f5b4e6c061a28a200341b2375.jpg",
+    "https://i.pinimg.com/1200x/40/ec/50/40ec50b9d6a2b46ee8af0ecee84e74d9.jpg",
     "https://i.pinimg.com/736x/8c/03/32/8c0332e348c7b9747737d9062fd130cc.jpg",
     "https://i.pinimg.com/736x/7e/17/56/7e1756b1ee103cefd9ee5a658aeeef6f.jpg",
     "https://i.pinimg.com/736x/4a/dc/f1/4adcf1724825ca251ba65cc75d8039d1.jpg",
@@ -20,15 +18,35 @@ function Banner() {
     "https://i.pinimg.com/control1/1200x/9c/b2/9f/9cb29fd88fe356679fb41cab2b1a6dde.jpg",
     "https://i.pinimg.com/736x/a0/ed/1b/a0ed1bf68cea76d1b313421620b0d836.jpg",
     "https://i.pinimg.com/736x/7a/a9/91/7aa991f8c8b76057e8b38c2e8cf75a78.jpg",
-  ];
+];
 
-  const allImages = [...images, ...images];
+function Banner({ artifacts, favorites, isAdmin, onEditArtifact, onToggleFavorite }) {
+  const displayItems = useMemo(() => {
+    const legacyItems = [...featuredImages, ...featuredImages].map((image, index) => ({
+      id: `gallery-${index}`,
+      image,
+      favoriteKey: image,
+      title: "Hiện vật",
+      description: "",
+    }));
+    const savedItems = artifacts.map((artifact) => ({
+        id: `artifact-${artifact.id}`,
+        image: artifact.imageData,
+        favoriteKey: `artifact:${artifact.id}`,
+        title: artifact.title,
+        description: artifact.description,
+        category: artifact.category,
+        artifact,
+      }));
+    const categoryItems = [...savedItems, ...legacyItems];
+    return [...categoryItems, ...categoryItems.map((item) => ({ ...item, id: `${item.id}-copy` }))];
+  }, [artifacts]);
 
   const [show, setShow] = useState(false);
-  const [selectedImage, setSelectedImage] = useState("");
+  const [selectedItem, setSelectedItem] = useState(null);
 
-  const openImage = (img) => {
-    setSelectedImage(img);
+  const openImage = (item) => {
+    setSelectedItem(item);
     setShow(true);
   };
 
@@ -40,22 +58,52 @@ function Banner() {
     <>
 
       <section className="banner">
-
         <div className="banner-track">
 
-          {allImages.map((img, index) => (
+          {displayItems.length > 0 ? displayItems.map((item) => (
 
             <div
               className="banner-card"
-              key={index}
-              onClick={() => openImage(img)}
+              key={item.id}
+              onClick={() => openImage(item)}
             >
 
-              <img src={img} alt="" />
+              <img src={item.image} alt={item.title} />
+              {item.description && <span className="artifact-card-title">{item.title}</span>}
+
+              <button
+                type="button"
+                className={`artifact-favorite ${favorites.includes(item.favoriteKey) ? "is-favorite" : ""}`}
+                aria-label={favorites.includes(item.favoriteKey) ? "Bỏ yêu thích hiện vật" : "Yêu thích hiện vật"}
+                aria-pressed={favorites.includes(item.favoriteKey)}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  onToggleFavorite(item.favoriteKey);
+                }}
+              >
+                <i className={`bi ${favorites.includes(item.favoriteKey) ? "bi-heart-fill" : "bi-heart"}`} aria-hidden="true"></i>
+              </button>
+
+              {isAdmin && item.category === "hot-hit" && item.artifact && (
+                <button
+                  type="button"
+                  className="hot-hit-edit"
+                  aria-label={`Sửa ${item.title}`}
+                  title="Sửa Hot hit"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    onEditArtifact(item.artifact);
+                  }}
+                >
+                  <i className="bi bi-flag-fill" aria-hidden="true"></i>
+                </button>
+              )}
 
             </div>
 
-          ))}
+          )) : (
+            <p className="artifact-category-empty">Chưa có hiện vật trong danh mục này.</p>
+          )}
 
         </div>
 
@@ -66,16 +114,32 @@ function Banner() {
         onHide={closeImage}
         centered
         size="xl"
-        className="image-modal"
+        className="image-modal artifact-profile-modal"
       >
 
-        <Modal.Body>
+        <Modal.Body className="artifact-profile-body">
 
-          <img
-            src={selectedImage}
-            alt=""
-            className="popup-image"
-          />
+          {selectedItem && (
+            <>
+              <img src={selectedItem.image} alt={selectedItem.title} className="popup-image" />
+              <div className="artifact-detail-copy">
+                <h3>{selectedItem.title}</h3>
+                {selectedItem.description && <p>{selectedItem.description}</p>}
+              </div>
+              {isAdmin && selectedItem.artifact && (
+                <button
+                  type="button"
+                  className="artifact-detail-edit"
+                  aria-label={`Sửa thông tin ${selectedItem.title}`}
+                  title="Sửa thông tin và ảnh"
+                  onClick={() => onEditArtifact(selectedItem.artifact)}
+                >
+                  <i className="bi bi-wrench-adjustable" aria-hidden="true"></i>
+                  <span>Sửa thông tin</span>
+                </button>
+              )}
+            </>
+          )}
 
         </Modal.Body>
 
